@@ -28,8 +28,20 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
- vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "80"
 
- vim.g.mapleader = " "
+vim.g.mapleader = " "
 
+-- Better-Whitespace
+vim.g.better_whitespace_enabled = 1
+vim.g.better_whitespace_on_save = 1
+vim.g.better_whitespace_confirm = 0
+
+vim.g.better_whitespace_filetypes_blacklist = {
+    'diff',
+    'gitcommit',
+    'unite',
+    'gf',
+    'help'
+}
 

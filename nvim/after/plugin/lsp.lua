@@ -32,6 +32,19 @@ require("lspconfig").rust_analyzer.setup {
     capabilities = capabilities,
 }
 
+require("lspconfig").elixirls.setup {
+    cmd = {vim.fn.stdpath("data") .. "/mason/bin/elixirls"},
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        elixirLS = {
+            dialyzerEnabled = true,
+            fetchDeps = false,
+            suggestSpecs = true,
+        }
+    }
+}
+
 ---
 -- Autocompletion Setup with nvim-cmp
 ---
