@@ -1,3 +1,3 @@
-require("scripts.remap")
-require("scripts.set")
-require("scripts.packer")
+require('scripts.remap')
+require('scripts.packer')
+require('scripts.set')

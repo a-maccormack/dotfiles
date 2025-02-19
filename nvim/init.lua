@@ -1,1 +1,1 @@
-require("scripts")
+require('scripts')
