@@ -9,8 +9,8 @@ require("mason-lspconfig").setup()
 -- Capabilities for nvim-cmp integration with LSP
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Function to set up key mappings when an LSP server attaches to a buffer
-local on_attach = function(_, _)
+-- Function to set up key mappings when an LSP server attaches to a buffer local on_attach = function(_, _)
+local on_attach = function(_,_)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {})
 
@@ -33,7 +33,7 @@ require("lspconfig").rust_analyzer.setup {
 }
 
 require("lspconfig").elixirls.setup {
-    cmd = {vim.fn.stdpath("data") .. "/mason/bin/elixirls"},
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/elixir-ls" },
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -41,8 +41,8 @@ require("lspconfig").elixirls.setup {
             dialyzerEnabled = true,
             fetchDeps = false,
             suggestSpecs = true,
-        }
-    }
+        },
+    },
 }
 
 ---
