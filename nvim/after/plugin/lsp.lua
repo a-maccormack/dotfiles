@@ -9,16 +9,32 @@ require("mason-lspconfig").setup()
 -- Capabilities for nvim-cmp integration with LSP
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Function to set up key mappings when an LSP server attaches to a buffer local on_attach = function(_, _)
-local on_attach = function(_,_)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {})
+local on_attach = function(client, bufnr)
+    -- Keymaps
+    local opts = { buffer = bufnr, silent = true }
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {})
-    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, {})
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+    -- Keybinding for formatting
+    vim.keymap.set('n', '<leader>f', function()
+        vim.lsp.buf.format({ async = true })
+    end, opts)
+
+    -- Format on save for supported clients
+    if client.supports_method("textDocument/formatting") then
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+                vim.lsp.buf.format()
+            end,
+        })
+    end
 end
+
 
 -- Pyright LSP setup with on_attach and capabilities
 require("lspconfig").pyright.setup {
@@ -49,12 +65,14 @@ require("lspconfig").elixirls.setup {
 -- Autocompletion Setup with nvim-cmp
 ---
 local cmp = require('cmp')
+local luasnip = require('luasnip')
+
+require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
     snippet = {
         expand = function(args)
-            -- Make sure you have a snippet plugin installed like `luasnip`
-            vim.fn["vsnip#anonymous"](args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert({
@@ -62,11 +80,11 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        -- { name = 'vsnip' }, -- Uncomment if using snippets
+        { name = 'luasnip' },
     }, {
         { name = 'buffer' },
     }),
