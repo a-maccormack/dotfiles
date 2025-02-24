@@ -32,16 +32,9 @@ vim.opt.colorcolumn = "80"
 
 vim.g.mapleader = " "
 
--- Better-Whitespace
 vim.g.better_whitespace_enabled = 1
-vim.g.better_whitespace_on_save = 1
-vim.g.better_whitespace_confirm = 0
+vim.g.strip_whitespace_on_save = 1
+vim.g.strip_whitespace_confirm = 0
+vim.g.better_whitespace_filetypes_blacklist = { 'diff', 'gitcommit', 'unite', 'qf', 'help' }
 
-vim.g.better_whitespace_filetypes_blacklist = {
-    'diff',
-    'gitcommit',
-    'unite',
-    'gf',
-    'help'
-}
-
+vim.api.nvim_set_keymap('n', '<Leader>ws', ':StripWhitespace<CR>', { noremap = true, silent = true })
