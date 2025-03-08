@@ -10,6 +10,8 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+exec_always feh --bg-scale ~/.config/background.png
+exec --no-startup-id picom --config ~/.config/picom/picom.conf --daemon
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -190,5 +192,8 @@ bar {
 	-m time date \
 	-p time.format="%H:%M" date.format="%d/%m/%y" \
 	-t gruvbox
+    font pango:JetBrainsMono Nerd Font 14
 }
+
+exec --no-startup-id xinput --set-prop "ELAN067B:00 04F3:31F8 Touchpad" "libinput Natural Scrolling Enabled" 1
 
