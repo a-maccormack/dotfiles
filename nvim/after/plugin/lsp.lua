@@ -61,6 +61,12 @@ require("lspconfig").elixirls.setup {
     },
 }
 
+require("lspconfig").terraformls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+
 ---
 -- Autocompletion Setup with nvim-cmp
 ---
