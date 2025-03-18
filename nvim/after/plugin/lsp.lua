@@ -49,7 +49,7 @@ require("lspconfig").rust_analyzer.setup {
 }
 
 require("lspconfig").elixirls.setup {
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/elixir-ls" },
+    cmd = { vim.fn.stdpath("data") .. "/mason/packages/elixir-ls/language_server.sh" },
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
