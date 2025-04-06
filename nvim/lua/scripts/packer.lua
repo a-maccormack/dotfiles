@@ -33,7 +33,6 @@ return require('packer').startup(function(use)
   use('ntpeters/vim-better-whitespace')
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.8',
-    -- or                            , branch = '0.1.x',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
 
@@ -42,4 +41,28 @@ return require('packer').startup(function(use)
 
   -- Theme
   use('projekt0n/github-nvim-theme')
+
+
+  -- Avante.nvim dependencies
+
+  -- Required
+  use('stevearc/dressing.nvim')
+  use('MunifTanjim/nui.nvim')
+  use('MeanderingProgrammer/render-markdown.nvim')
+
+  -- Optional
+  use('nvim-tree/nvim-web-devicons')
+  use('HakonHarnes/img-clip.nvim')
+  use('zbirenbaum/copilot.lua')
+
+  -- Avante
+  use {
+    'yetone/avante.nvim',
+    branch = 'main',
+    run = 'make',
+    config = function()
+      require('avante').setup()
+    end
+  }
 end)
+
