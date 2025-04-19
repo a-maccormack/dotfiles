@@ -193,6 +193,19 @@ input * {
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
+
+mode "adjust" {
+    bindsym $left move left
+    bindsym $down move down
+    bindsym $up move up
+    bindsym $right move right
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Return mode "adjust"
+
 #
 # Resizing containers:
 #
