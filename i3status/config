@@ -17,6 +17,8 @@ memory {
 
 battery all {
     format = "%status %percentage %remaining"
+    last_full_capacity = true
+    integer_battery_capacity = true
 }
 
 time {
