@@ -1,5 +1,12 @@
 #!/bin/bash
 
 source ~/.zshrc
-firefox-base -P
+
+URL="$1"
+
+if [[ -n "$URL" ]]; then
+    exec firefox-base --no-remote -P "$PROFILE" --new-tab "$@"
+else
+    exec firefox-base --no-remote -P "$PROFILE"
+fi
 
