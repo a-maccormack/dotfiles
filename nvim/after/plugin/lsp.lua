@@ -35,6 +35,12 @@ local on_attach = function(client, bufnr)
     end
 end
 
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+})
+
 
 -- Pyright LSP setup with on_attach and capabilities
 require("lspconfig").pyright.setup {
