@@ -1,0 +1,30 @@
+general {
+  output_format = "i3bar"
+  colors = true
+  interval = 5
+}
+
+order += "disk /"
+order += "memory"
+order += "battery all"
+order += "time"
+
+memory {
+  format = "MEM: %used"
+  threshold_degraded = "1G"
+  format_degraded = "MEM: LOW %used"
+}
+
+battery all {
+    format = "%status %percentage %remaining"
+    last_full_capacity = true
+    integer_battery_capacity = true
+}
+
+time {
+  format = "%d/%m/%y %H:%M"
+}
+
+disk "/" {
+    format = "%avail"
+}
