@@ -1,0 +1,67 @@
+#!/bin/bash
+
+echo "Installing APT deps..."
+
+dependencies=(
+    "tree"
+    "git"
+    "tmux"
+    "i3"
+    "i3status"
+    "i3lock"
+    "dmenu"
+    "kitty"
+    "curl"
+    "wget"
+    "git"
+    "tmux"
+    "zsh"
+    "pipx"
+    "picom"
+    "x11-xserver-utils"
+    "brightnessctl"
+    "feh"
+    "blueman"
+    "ripgrep"
+    "neofetch"
+    "build-essential"
+    "libssl-dev"
+    "zlib1g-dev"
+    "libbz2-dev"
+    "libreadline-dev"
+    "libsqlite3-dev"
+    "llvm"
+    "libncursesw5-dev"
+    "xz-utils"
+    "tk-dev"
+    "libxml2-dev"
+    "libxmlsec1-dev"
+    "libffi-dev"
+    "liblzma-dev"
+    "v4l-utils"
+    "flameshot"
+    "direnv"
+)
+
+./scripts/install_apt_dependencies.sh "${dependencies[@]}"
+./scripts/install_neovim.sh
+./scripts/install_oh_my_zsh.sh
+./scripts/install_pyenv.sh
+./scripts/install_nvm.sh
+./scripts/install_asdf.sh
+./scripts/install_ansible.sh
+./scripts/install_docker.sh
+./scripts/set_brightness_permissions.sh
+./scripts/create_symlinks.sh \
+    "$(pwd)/config/nvim" "$HOME/.config/nvim" \
+    "$(pwd)/config/kitty" "$HOME/.config/kitty" \
+    "$(pwd)/config/picom" "$HOME/.config/picom" \
+    "$(pwd)/config/i3" "$HOME/.config/i3" \
+    "$(pwd)/config/i3status" "$HOME/.config/i3status" \
+    "$(pwd)/config/tmux/.tmux.conf" "$HOME/.tmux.conf" \
+    "$(pwd)/config/x11/.Xresources" "$HOME/.Xresources" \
+    "$(pwd)/config/x11/.xinitrc" "$HOME/.xinitrc"
+
+
+./scripts/hooks/hook_tmux.sh
+./scripts/hooks/hook_direnv.sh
