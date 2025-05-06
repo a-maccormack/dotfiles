@@ -51,6 +51,7 @@ dependencies=(
 ./scripts/install_asdf.sh
 ./scripts/install_ansible.sh
 ./scripts/install_docker.sh
+./scripts/install_dropbox.sh
 ./scripts/set_brightness_permissions.sh
 ./scripts/create_symlinks.sh \
     "$(pwd)/config/nvim" "$HOME/.config/nvim" \
