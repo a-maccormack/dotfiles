@@ -11,7 +11,7 @@ fi
 CONFIG=$(ls "$CONFIG_DIR" | sed 's/\.ya\?ml$//' | fzf --prompt="Choose tmuxp config: ")
 [ -z "$CONFIG" ] && exit 0
 
-for i in $(seq 1 9); do
+for i in $(seq 0 9); do
   if ! tmux has-session -t "$i" 2>/dev/null; then
     tmux display-message "Launching $CONFIG as session $i..."
 
