@@ -15,6 +15,9 @@ while [ $# -gt 1 ]; do
     elif [ "$src_dir" == "$dest_symlink" ]; then
         echo "Source and destination are the same: '$src_dir'. Skipping..."
     else
+        dest_dir=$(dirname "$dest_symlink")
+        mkdir -p "$dest_dir"
+
         echo "Creating symlink: $src_dir -> $dest_symlink"
         ln -sfn "$src_dir" "$dest_symlink"
     fi

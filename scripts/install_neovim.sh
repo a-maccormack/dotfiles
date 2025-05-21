@@ -21,24 +21,9 @@ if ! [ -x "$(command -v nvim)" ]; then
         exit 1
     fi
 
-    echo "Creating symlinks for Neovim configuration..."
-    ln -s "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
-
     echo "Neovim installation and configuration setup complete."
 else
     echo "Neovim is already installed. Skipping download."
-
-    DOTFILES_DIR=$(pwd)
-
-    if [ ! -d "$DOTFILES_DIR" ]; then
-        echo "Dotfiles directory not found! Please ensure you are in the correct directory."
-        exit 1
-    fi
-
-    echo "Creating symlinks for Neovim configuration..."
-    ln -s "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
-
-    echo "Neovim configuration setup complete."
 fi
 
 if [ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then
