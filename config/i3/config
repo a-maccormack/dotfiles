@@ -41,6 +41,12 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute \@DEFAULT_SINK@ t
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume \@DEFAULT_SINK@ -5%
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume \@DEFAULT_SINK@ +5%
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+
+# Special keys for audio controls
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
 # Special keys to adjust brightness via brightnessctl
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -d intel_backlight set 5%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -d intel_backlight set 5%+
@@ -50,6 +56,9 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+t exec i3-sensible-terminal
+
+# print screen
+bindsym Print exec --no-startup-id flameshot gui -c
 
 # kill focused window
 bindsym $mod+q kill
