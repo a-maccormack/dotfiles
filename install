@@ -41,6 +41,11 @@ dependencies=(
     "v4l-utils"
     "flameshot"
     "direnv"
+    "arandr"
+    "ffmpeg"
+    "playerctl"
+    "tmuxp"
+    "fzf"
 )
 
 ./scripts/install_apt_dependencies.sh "${dependencies[@]}"
@@ -58,10 +63,12 @@ dependencies=(
     "$(pwd)/config/kitty" "$HOME/.config/kitty" \
     "$(pwd)/config/picom" "$HOME/.config/picom" \
     "$(pwd)/config/i3" "$HOME/.config/i3" \
+    "$(pwd)/config/tmuxp" "$HOME/.config/tmuxp" \
     "$(pwd)/config/i3status" "$HOME/.config/i3status" \
     "$(pwd)/config/tmux/.tmux.conf" "$HOME/.tmux.conf" \
     "$(pwd)/config/x11/.Xresources" "$HOME/.Xresources" \
-    "$(pwd)/config/x11/.xinitrc" "$HOME/.xinitrc"
+    "$(pwd)/config/x11/.xinitrc" "$HOME/.xinitrc" \
+    "$(pwd)/scripts/launch_tmuxp_indexed.sh" "$HOME/scripts/launch_tmuxp_indexed.sh"
 
 
 ./scripts/hooks/hook_tmux.sh
