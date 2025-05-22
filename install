@@ -46,6 +46,7 @@ dependencies=(
     "playerctl"
     "tmuxp"
     "fzf"
+    "xclip"
 )
 
 ./scripts/install_apt_dependencies.sh "${dependencies[@]}"
