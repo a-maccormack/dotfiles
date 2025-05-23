@@ -36,7 +36,8 @@ local on_attach = function(client, bufnr)
 end
 
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = false,
+  virtual_lines = true,
   signs = true,
   underline = true,
 })
