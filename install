@@ -47,6 +47,8 @@ dependencies=(
     "tmuxp"
     "fzf"
     "xclip"
+    "obs-studio"
+    "autorandr"
 )
 
 ./scripts/install_apt_dependencies.sh "${dependencies[@]}"
@@ -64,6 +66,7 @@ dependencies=(
     "$(pwd)/config/nvim" "$HOME/.config/nvim" \
     "$(pwd)/config/kitty" "$HOME/.config/kitty" \
     "$(pwd)/config/picom" "$HOME/.config/picom" \
+    "$(pwd)/config/autorandr" "$HOME/.config/autorandr" \
     "$(pwd)/config/i3" "$HOME/.config/i3" \
     "$(pwd)/config/tmuxp" "$HOME/.config/tmuxp" \
     "$(pwd)/config/i3status" "$HOME/.config/i3status" \
