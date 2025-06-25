@@ -60,6 +60,7 @@ dependencies=(
 ./scripts/install_ansible.sh
 ./scripts/install_docker.sh
 ./scripts/install_dropbox.sh
+./scripts/install_ngrok.sh
 ./scripts/install_spotify.sh
 ./scripts/set_brightness_permissions.sh
 ./scripts/create_symlinks.sh \
