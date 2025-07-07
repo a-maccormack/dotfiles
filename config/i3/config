@@ -23,6 +23,8 @@ font pango:monospace 10
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id picom --config ~/.config/picom/picom.conf --daemon
 exec --no-startup-id dex --autostart --environment i3
+exec_always --no-startup-id bash -c 'xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Natural Scrolling Enabled" 0'
+exec_always --no-startup-id bash -c 'xinput set-prop "Logitech MX Vertical Advanced Ergonomic Mouse" "libinput Natural Scrolling Enabled" 0'
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -31,9 +33,9 @@ exec --no-startup-id dex --autostart --environment i3
 # screen before suspend. Use loginctl lock-session to lock your screen.
 bindsym $mod+Escape exec --no-startup-id bash -c "i3lock -c 000000 && systemctl suspend"
 
-exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id xset s 180 180
-exec --no-startup-id xset +dpms
+#exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+#exec --no-startup-id xset s 180 180
+#exec --no-startup-id xset +dpms
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
