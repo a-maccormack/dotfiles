@@ -49,6 +49,8 @@ dependencies=(
     "xclip"
     "obs-studio"
     "autorandr"
+    "lxappearance"
+    "xss-lock"
 )
 
 ./scripts/install_apt_dependencies.sh "${dependencies[@]}"
