@@ -32,6 +32,7 @@ exec_always --no-startup-id bash -c 'xinput set-prop "Logitech MX Vertical Advan
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 bindsym $mod+Escape exec --no-startup-id bash -c "i3lock -c 000000 && systemctl suspend"
+exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -c 000000
 
 #exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 #exec --no-startup-id xset s 180 180
@@ -61,9 +62,11 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+t exec i3-sensible-terminal
+bindsym $mod+s exec gnome-control-center
 
 # print screen
 bindsym Print exec --no-startup-id flameshot gui -c
+bindsym $mod+p exec --no-startup-id flameshot gui -c
 
 # kill focused window
 bindsym $mod+q kill
@@ -111,7 +114,7 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+#bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -120,9 +123,6 @@ bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -171,20 +171,37 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
 mode "adjust" {
         bindsym h move left
         bindsym j move down
         bindsym k move up
         bindsym l move right
 
-        # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+Return mode "default"
 }
 
-bindsym $mod+Return mode "adjust"
+bindsym $mod+a mode "adjust"
+
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    bindsym Left  resize shrink width 10 px or 10 ppt
+    bindsym Down  resize grow height 10 px or 10 ppt
+    bindsym Up    resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+Return mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
