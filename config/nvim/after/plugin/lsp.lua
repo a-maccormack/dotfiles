@@ -2,37 +2,35 @@
 -- LSP Configuration
 ---
 
--- Ensure Mason is installed and set up for managing LSP servers
 require("mason").setup()
 require("mason-lspconfig").setup()
 
--- Capabilities for nvim-cmp integration with LSP
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = function(client, bufnr)
-    -- Keymaps
-    local opts = { buffer = bufnr, silent = true }
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+  local opts = { buffer = bufnr, silent = true }
 
-    -- Keybinding for formatting
-    vim.keymap.set('n', '<leader>f', function()
-        vim.lsp.buf.format({ async = true })
-    end, opts)
+  if client.name == "ts_ls" then
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end
 
-    -- Format on save for supported clients
-    if client.supports_method("textDocument/formatting") then
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            callback = function()
-                vim.lsp.buf.format()
-            end,
-        })
-    end
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+  vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', '<leader>f', function()
+    require("conform").format({ async = true, lsp_fallback = true })
+  end, opts)
+
+  vim.keymap.set('n', '<leader>oi', function()
+    vim.lsp.buf.code_action({
+      context = { only = { "source.organizeImports", "source.fixAll" } },
+      apply = true,
+    })
+  end, opts)
 end
 
 vim.diagnostic.config({
@@ -42,68 +40,108 @@ vim.diagnostic.config({
   underline = true,
 })
 
+local lspconfig = require("lspconfig")
 
--- Pyright LSP setup with on_attach and capabilities
-require("lspconfig").pyright.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
+lspconfig.ruff.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
 
--- Example configuration for another LSP (e.g., Rust Analyzer)
-require("lspconfig").rust_analyzer.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
+lspconfig.rust_analyzer.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
 
-require("lspconfig").elixirls.setup {
-    cmd = { vim.fn.stdpath("data") .. "/mason/packages/elixir-ls/language_server.sh" },
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        elixirLS = {
-            dialyzerEnabled = true,
-            fetchDeps = false,
-            suggestSpecs = true,
-        },
+lspconfig.elixirls.setup({
+  cmd = { vim.fn.stdpath("data") .. "/mason/packages/elixir-ls/language_server.sh" },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    elixirLS = {
+      dialyzerEnabled = true,
+      fetchDeps = false,
+      suggestSpecs = true,
     },
-}
+  },
+})
 
-require("lspconfig").terraformls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
+lspconfig.terraformls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
 
-require("lspconfig").ts_ls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
+lspconfig.ts_ls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
 
----
--- Autocompletion Setup with nvim-cmp
----
+require("conform").setup({
+  formatters_by_ft = {
+    javascript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescript = { "prettier" },
+    typescriptreact = { "prettier" },
+    json = { "prettier" },
+    html = { "prettier" },
+    css = { "prettier" },
+    yaml = { "prettier" },
+    markdown = { "prettier" },
+    python = { "ruff_organize_imports", "ruff_format" },
+  },
+  format_on_save = false,
+})
+
+local aug = vim.api.nvim_create_augroup("FormatAndImports", { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = aug,
+  pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
+  callback = function(args)
+    pcall(vim.lsp.buf.code_action, {
+      context = { only = { "source.organizeImports" } },
+      apply = true,
+    })
+    require("conform").format({
+      bufnr = args.buf,
+      async = false,
+      lsp_fallback = true,
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = aug,
+  pattern = { "*.py" },
+  callback = function(args)
+    require("conform").format({
+      bufnr = args.buf,
+      async = false,
+      lsp_fallback = true,
+      formatters = { "ruff_organize_imports", "ruff_format" },
+    })
+  end,
+})
+
 local cmp = require('cmp')
 local luasnip = require('luasnip')
-
 require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    }),
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    }, {
-        { name = 'buffer' },
-    }),
+  snippet = {
+    expand = function(args) luasnip.lsp_expand(args.body) end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'buffer' },
+  }),
 })
 
