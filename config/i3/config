@@ -26,6 +26,10 @@ exec --no-startup-id dex --autostart --environment i3
 exec_always --no-startup-id bash -c 'xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Natural Scrolling Enabled" 0'
 exec_always --no-startup-id bash -c 'xinput set-prop "Logitech MX Vertical Advanced Ergonomic Mouse" "libinput Natural Scrolling Enabled" 0'
 
+exec_always --no-startup-id setxkbmap -layout "es,us" -variant ",intl"
+
+bindsym $mod+i exec --no-startup-id ~/.config/i3/scripts/toggle_keyboard_layout.sh
+
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
