@@ -23,12 +23,9 @@ font pango:monospace 10
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id picom --config ~/.config/picom/picom.conf --daemon
 exec --no-startup-id dex --autostart --environment i3
-exec_always --no-startup-id bash -c 'xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Natural Scrolling Enabled" 0'
-exec_always --no-startup-id bash -c 'xinput set-prop "Logitech MX Vertical Advanced Ergonomic Mouse" "libinput Natural Scrolling Enabled" 0'
 
-exec_always --no-startup-id setxkbmap -layout "es,us" -variant ",intl"
-
-bindsym $mod+i exec --no-startup-id ~/.config/i3/scripts/toggle_keyboard_layout.sh
+# Start Ibus daemon
+exec --no-startup-id ibus-daemon -drx --panel=disable
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -83,6 +80,7 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 focus_wrapping no
+focus_follows_mouse no
 
 # change focus
 bindsym $mod+h focus left
@@ -125,8 +123,7 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+i exec --no-startup-id $HOME/.config/i3/scripts/toggle_keyboard_layout.sh
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -167,6 +164,8 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+
+client.focused          #ff8800 #ff8800 #000000 #ff8800 #ff8800
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -210,7 +209,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+    status_command $HOME/.config/i3status/i3status-ibus.sh
 }
 
 exec_always --no-startup-id feh --bg-fill $HOME/.config/i3/background.jpg
