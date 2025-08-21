@@ -26,6 +26,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # Start Ibus daemon
 exec --no-startup-id ibus-daemon -drx --panel=disable
+exec_always --no-startup-id xinput set-prop "Logitech MX Vertical Advanced Ergonomic Mouse" "libinput Natural Scrolling Enabled" 0
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
