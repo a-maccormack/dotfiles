@@ -126,6 +126,9 @@ bindsym $mod+Shift+space floating toggle
 
 bindsym $mod+i exec --no-startup-id $HOME/.config/i3/scripts/toggle_keyboard_layout.sh
 
+gaps inner 10px
+gaps outer 5px
+
 # focus the child container
 #bindsym $mod+d focus child
 

@@ -6,7 +6,6 @@ dependencies=(
     "tree"
     "git"
     "tmux"
-    "i3"
     "i3status"
     "i3lock"
     "dmenu"
@@ -59,6 +58,7 @@ dependencies=(
 )
 
 ./scripts/install_apt_dependencies.sh "${dependencies[@]}"
+./scripts/install_i3.sh
 ./scripts/install_neovim.sh
 ./scripts/install_oh_my_zsh.sh
 ./scripts/install_pyenv.sh
