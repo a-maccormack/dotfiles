@@ -33,7 +33,7 @@ exec_always --no-startup-id xinput set-prop "Logitech MX Vertical Advanced Ergon
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-bindsym $mod+Escape exec --no-startup-id bash -c "i3lock -c 000000 && systemctl suspend"
+bindsym $mod+Escape exec --no-startup-id bash -c "i3lock -c 000000"
 exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -c 000000
 
 #exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -176,14 +176,14 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 mode "adjust" {
-        bindsym h move left
-        bindsym j move down
-        bindsym k move up
-        bindsym l move right
+    bindsym h move left
+    bindsym j move down
+    bindsym k move up
+    bindsym l move right
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+Return mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+Return mode "default"
 }
 
 bindsym $mod+a mode "adjust"
