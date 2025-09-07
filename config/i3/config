@@ -56,8 +56,8 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Special keys to adjust brightness via brightnessctl
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -d intel_backlight set 5%-
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -d intel_backlight set 5%+
+bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/handle_brightness.sh down
+bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/handle_brightness.sh up
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
