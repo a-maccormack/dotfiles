@@ -51,6 +51,11 @@ dependencies=(
     "autorandr"
     "lxappearance"
     "xss-lock"
+    "qemu-kvm"
+    "virt-manager"
+    "libvirt-daemon-system"
+    "libvirt-clients"
+    "bridge-utils"
 )
 
 ./scripts/install_apt_dependencies.sh "${dependencies[@]}"
