@@ -11,3 +11,5 @@ else
     ibus engine "$us"
 fi
 
+pkill -USR1 -x i3status
+
