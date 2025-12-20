@@ -50,29 +50,23 @@ vim.diagnostic.config({
 	underline = true,
 })
 
-local lspconfig = require("lspconfig")
-
-lspconfig.ruff.setup({
+vim.lsp.config["ruff"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
+}
 
-lspconfig.pyright.setup({
+vim.lsp.config["pyright"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
+}
 
-lspconfig.lua_ls.setup({
+vim.lsp.config["lua_ls"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
 		Lua = {
-			runtime = {
-				version = "LuaJIT",
-			},
-			diagnostics = {
-				globals = { "vim" },
-			},
+			runtime = { version = "LuaJIT" },
+			diagnostics = { globals = { "vim" } },
 			workspace = {
 				library = vim.api.nvim_get_runtime_file("", true),
 				checkThirdParty = false,
@@ -80,14 +74,14 @@ lspconfig.lua_ls.setup({
 			telemetry = { enable = false },
 		},
 	},
-})
+}
 
-lspconfig.rust_analyzer.setup({
+vim.lsp.config["rust_analyzer"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
+}
 
-lspconfig.elixirls.setup({
+vim.lsp.config["elixirls"] = {
 	cmd = { vim.fn.stdpath("data") .. "/mason/packages/elixir-ls/language_server.sh" },
 	on_attach = on_attach,
 	capabilities = capabilities,
@@ -98,17 +92,29 @@ lspconfig.elixirls.setup({
 			suggestSpecs = true,
 		},
 	},
-})
+}
 
-lspconfig.terraformls.setup({
+vim.lsp.config["terraformls"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
+}
 
-lspconfig.ts_ls.setup({
+vim.lsp.config["ts_ls"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
+}
+
+vim.lsp.config["nil_ls"] = {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		["nil"] = {
+			formatting = {
+				command = { "nixpkgs-fmt" },
+			},
+		},
+	},
+}
 
 require("conform").setup({
 	formatters_by_ft = {
@@ -127,6 +133,7 @@ require("conform").setup({
 		elixir = { "mix" },
 		heex = { "mix" },
 		lua = { "stylua" },
+		nix = { "nixpkgs_fmt" },
 	},
 	format_on_save = {
 		lsp_fallback = true,
